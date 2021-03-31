@@ -23,8 +23,9 @@ class SplashScreen extends StatelessWidget {
     return Container(
       child: Center(
         child: Image.asset('assets/image/cointena.png',
-          height: 200,
-          width: 200
+          height: 300,
+          width: 300,
+          fit: BoxFit.fitWidth,
         ),
       ),
     );

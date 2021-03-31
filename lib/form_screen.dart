@@ -45,7 +45,8 @@ class _FormScreenState extends State<FormScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.amber[900],
-          title: Center(child: Text('GP Calculator')),
+          title: Text('GP Calculator'),
+          centerTitle: true,
           actions: [
             IconButton(
                 icon: Icon(Icons.add_circle_outline),
@@ -167,7 +168,11 @@ class _FormScreenState extends State<FormScreen> {
                           }
                         }
                       },
-                      child: Text('Calculate'),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical:10.0),
+                        child: Text('Calculate',
+                        style: TextStyle(fontSize: 20),),
+                      ),
                     ),),
                     SizedBox(width: 20,),
                     Expanded(
@@ -181,7 +186,11 @@ class _FormScreenState extends State<FormScreen> {
                             });
                           }
                         },
-                        child: Text('Reset'),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical:10.0),
+                          child: Text('Reset',
+                          style: TextStyle(fontSize: 20),),
+                        ),
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.red,
                         ),
@@ -189,7 +198,7 @@ class _FormScreenState extends State<FormScreen> {
                     )
                   ],
                 ),
-                SizedBox(height: 0,)
+                SizedBox(height: 5,)
 
               ],
 
