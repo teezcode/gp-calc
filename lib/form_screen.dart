@@ -41,154 +41,159 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('GP Calculator')),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: () {
-                setState(() {
-                  _formCount++;
-                  // _initDropDown();
-                  _gradeDropdownValues.add('Grade');
-                  _unitLoadControllers.add(TextEditingController());
-                });
-              }),
-          IconButton(
-              icon: Icon(Icons.remove_circle_outline),
-              onPressed: () {
-                setState(() {
-                  if (_formCount > 1) {
-                    _formCount--;
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.amber[900],
+          title: Center(child: Text('GP Calculator')),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.add_circle_outline),
+                onPressed: () {
+                  setState(() {
+                    _formCount++;
                     // _initDropDown();
-                    _gradeDropdownValues.removeLast();
-                    _unitLoadControllers.removeLast();
-                  }
-                });
-              })
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              ListView.builder(
-                itemCount: _formCount,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              labelText: 'Course Code',
-                              hintText: 'Enter Course code here',
-                              border: OutlineInputBorder(),
+                    _gradeDropdownValues.add('Grade');
+                    _unitLoadControllers.add(TextEditingController());
+                  });
+                }),
+            IconButton(
+                icon: Icon(Icons.remove_circle_outline),
+                onPressed: () {
+                  setState(() {
+                    if (_formCount > 1) {
+                      _formCount--;
+                      // _initDropDown();
+                      _gradeDropdownValues.removeLast();
+                      _unitLoadControllers.removeLast();
+                    }
+                  });
+                })
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _formCount,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: TextFormField(
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  labelText: 'Course Code',
+                                  hintText: 'Enter Course code here',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: DropdownButtonFormField<String>(
-                            value: _gradeDropdownValues[index],
-                            icon: Icon(Icons.arrow_drop_down),
-                            onChanged: (String grade) {
-                              setState(() {
-                                _gradeDropdownValues[index] = grade;
-                              });
-                            },
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
+                            SizedBox(
+                              width: 10,
                             ),
-                            items: _gradeDropDownItems.keys
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _unitLoadControllers[index],
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Required';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Unit Load',
-                              hintText: 'Enter Unit Load here',
-                              border: OutlineInputBorder(),
+                            Expanded(
+                              flex: 2,
+                              child: DropdownButtonFormField<String>(
+                                value: _gradeDropdownValues[index],
+                                icon: Icon(Icons.arrow_drop_down),
+                                onChanged: (String grade) {
+                                  setState(() {
+                                    _gradeDropdownValues[index] = grade;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                ),
+                                items: _gradeDropDownItems.keys
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 10,),
-              Row(
-                children: [
-                  Expanded(child:
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        if (_validateDropdown()) {
-                          _showGradePoint(_calculate());
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                            'Enter all forms required',
-                            textAlign: TextAlign.center,
-                          )));
-                        }
-                      }
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _unitLoadControllers[index],
+                                keyboardType: TextInputType.number,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Required';
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  labelText: 'Unit Load',
+                                  hintText: 'Enter Unit Load here',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
                     },
-                    child: Text('Calculate'),
-                  ),),
-                  SizedBox(width: 20,),
-                  Expanded(
-                    child: ElevatedButton(
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [
+                    Expanded(child:
+                    ElevatedButton(
                       onPressed: () {
-                        //_formKey.currentState.reset();
-                        for(int i=0; i<_formCount; i++){
-                          setState(() {
-                            _unitLoadControllers[i].clear();
-                            _gradeDropdownValues[i]='Grade';
-                          });
+                        if (_formKey.currentState.validate()) {
+                          if (_validateDropdown()) {
+                            _showGradePoint(_calculate());
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                              'Enter all forms required',
+                              textAlign: TextAlign.center,
+                            )));
+                          }
                         }
                       },
-                      child: Text('Reset'),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.red,
+                      child: Text('Calculate'),
+                    ),),
+                    SizedBox(width: 20,),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          //_formKey.currentState.reset();
+                          for(int i=0; i<_formCount; i++){
+                            setState(() {
+                              _unitLoadControllers[i].clear();
+                              _gradeDropdownValues[i]='Grade';
+                            });
+                          }
+                        },
+                        child: Text('Reset'),
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 0,)
 
-            ],
+              ],
 
+            ),
           ),
         ),
       ),
