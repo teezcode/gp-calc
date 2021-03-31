@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
 
   BuildContext _context;
   startTimeout(){
-    return new Timer(Duration(seconds:5), handleTimeout);
+    return new Timer(Duration(seconds:2), handleTimeout);
   }
 
   void handleTimeout(){
